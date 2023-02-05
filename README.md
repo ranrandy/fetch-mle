@@ -32,11 +32,11 @@ Click "choose the model", choose from "Linear Regression", "MLP", or "LSTM", and
 
 **<i>If you don't want to wait that few seconds, you can go to the `app.py` file, and comment out those 3 `os.system()` lines. Then rebuild the image or don't use docker and run `flask run` at your local machine.</i>**
 
-<!-- <img src="static/web_interface_forecast.png" width=800> -->
+<img src="static/web_interface_forecast.png" width=800>
 
-<video width="1000" width="800" control>
+<!-- <video width="1000" width="800" control>
     <source src="static/save_eval/lstm_forecasting_2022_monthly.mp4" type="video/mp4">
-</video>
+</video> -->
 You can see the monthly sum from the numbers around the line in the video.
 
 ### 1.1 Evaluation Metric Numbers
