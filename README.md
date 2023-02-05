@@ -1,8 +1,10 @@
 # MLE Take Home Exercise - Fetch
-Runfeng Li
+Runfeng Li. 
+
+Please contact me by runfeng4[at]illinois[dot]edu if you have any question.
 
 ## 1. Run the App
-Turn on Docker on your computer, and run the following commands to build the docker image and run.
+Turn on Docker on your computer, and run the following commands to build the docker image and run. You may need to wait 5-10 minutes until this image finishes setting up.
 ```
 git clone https://github.com/ranrandy/fetch-mle.git
 cd fetch-mle
@@ -14,11 +16,11 @@ Next, go to [http://localhost:5001/](http://localhost:5001/) to visit the app. I
 
 Then you will see an interface like below
 
-<img src="static/web_interface.png" height=400>
+<img src="static/web_interface.png" width=800>
 
 Click "choose the model", choose from "Linear Regression", "MLP", or "LSTM", and click "Forecast 2022" to get the animated predicted receipt count values (daily and monthly) in 2022, like below
 
-<img src="static/web_interface_forecast.png" height=400>
+<img src="static/web_interface_forecast.png" width=800>
 
 You can see the forecasted monthly sum of receipt count from the numbers in the bottom video.
 
@@ -74,7 +76,7 @@ tensorboard --logdir=save
 ```
 Go to the returned link, probably [http://localhost:6006/](http://localhost:6006/). Then you will see an interface like below:
 
-<img src='static/tensorboard.png' height=400>
+<img src='static/tensorboard.png' width=800>
 
 I chose the model checkpoints based on the curves, 70 for MLP (right), 100 for Linear Regression (upper left), and 100 for LSTM (bottom).
 
