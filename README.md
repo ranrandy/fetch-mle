@@ -7,8 +7,14 @@ If you have any question, please contact me via runfeng4[at]illinois[dot]edu.
 Turn on **Docker** on your computer (please make sure it's started not starting), and run the following commands to build and run the docker image. You may need to wait 5-10 minutes until this image finishes setting up.
 ```
 git clone https://github.com/ranrandy/fetch-mle.git
+```
+```
 cd fetch-mle
+```
+```
 docker build -t forecast_app .
+```
+```
 docker run -it -p 5001:5000 forecast_app
 ```
 Next, go to [http://localhost:5001/](http://localhost:5001/) to visit the app. If you encounter any error that your port has been used, please change 5001 to any other numbers. For example, run `docker run -it -p 5002:5000 forecast_app`, and visit 
@@ -32,8 +38,10 @@ You can see the forecasted monthly sum of receipt count from the numbers in the 
 
 | Models         | MSE     | MAE | RMSE | R-Square
 |--------------|-----------|------------|----|----|
-| Linear Regression | **0.0394** | **0.0429** | **0.0800** | 0.0156 |
+| Linear Regression | **0.0394** | **0.0429** | **0.0800** | **0.0156** |
 | MLP      | 0.1263  | 0.0778       |0.1483  |-0.0862|
+
+**LSTM results are not shown here because after normalization, LSTM may be too complicated to train. Then if we don't norrmalize, the MSE, MAE, and RMSE will be very different from using normalized data**
 
 **We can see that simple linear regression is the most efficient and accurate model for this dataset.**
 
@@ -57,6 +65,8 @@ You might need to install `ffmpeg` because that is used in animating the final r
 #### 2.2.1 Linear Regression & MLP
 ```
 python -m train.train --arch linear --date True --norm True --steps 100
+```
+```
 python -m train.train --arch mlp --hidden_dim 10 --date True --norm True --steps 100
 ```
 
@@ -71,13 +81,19 @@ python -m train.train --arch lstm --norm True --steps 200
 #### 2.2.3 Test-Only (Load Model Checkpoint)
 ```
 python -m train.test --arch linear  --date True --norm True --model_path 'save/linear_bs64_99.pth'
+```
+```
 python -m train.test --arch mlp --hidden_dim 10 --date True --norm True --model_path 'save/mlp_hid10_bs64_70.pth'
 ```
 
 ### 2.3 Forecast 2022 Values (Inference / Evaluation)
 ```
 python -m eval.eval --arch linear --model_path 'save/linear_bs64_99.pth'
+```
+```
 python -m eval.eval --arch mlp --hidden_dim 10 --model_path 'save/mlp_hid10_bs64_70.pth'
+```
+```
 python keras_lstm_inference_only.py --model_path 'save/lstm_in20_out1_hid40_100'
 ```
 
@@ -106,6 +122,8 @@ In `data/exploratory_data_analysis.ipynb`, I visualized some simple plots for th
 To test the implementation for `models.py` and `dataloader.py`, you can run
 ```
 python -m utils.model
+```
+```
 python -m utils.dataloader
 ```
 Then you can check if the output are what you want.
