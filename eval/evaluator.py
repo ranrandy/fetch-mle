@@ -78,7 +78,8 @@ class Evaluator:
             plt.plot(x,y, scaley=True, scalex=True, color="green", linestyle='--')
 
         ani = FuncAnimation(fig=fig, func=animate, frames=365, interval=20)
-        ani.save(f"{self.args.save_dir}/{self.args.arch}_forecasting_2022_{self.args.model_path[-6:-4]}.mp4", writer = 'ffmpeg', fps = 60)
+        # ani.save(f"{self.args.save_dir}/{self.args.arch}_forecasting_2022_{self.args.model_path[-6:-4]}.mp4", writer = 'ffmpeg', fps = 60)
+        ani.save(f"{self.args.save_dir}/{self.args.arch}_forecasting_2022.mp4", writer = 'ffmpeg', fps = 60)
         plt.close()
 
         # Monthly
@@ -120,7 +121,8 @@ class Evaluator:
             plt.annotate(f'{result_monthly[i]}', xy=(x[-1], y[-1]), xytext=(x[-1], y[-1]+5e7*(i%2*2-1)))
 
         ani = FuncAnimation(fig=fig, func=animate, frames=12, interval=20)
-        ani.save(f"{self.args.save_dir}/{self.args.arch}_forecasting_2022_{self.args.model_path[-6:-4]}_monthly.mp4", writer = 'ffmpeg', fps = 2)
+        # ani.save(f"{self.args.save_dir}/{self.args.arch}_forecasting_2022_{self.args.model_path[-6:-4]}_monthly.mp4", writer = 'ffmpeg', fps = 2)
+        ani.save(f"{self.args.save_dir}/{self.args.arch}_forecasting_2022_monthly.mp4", writer = 'ffmpeg', fps = 2)
         plt.close()
 
         

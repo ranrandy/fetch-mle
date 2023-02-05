@@ -18,7 +18,11 @@ Then you will see an interface like below
 
 <img src="static/web_interface.png" width=800>
 
-Click "choose the model", choose from "Linear Regression", "MLP", or "LSTM", and click "Forecast 2022" to get the animated predicted receipt count values (daily and monthly) in 2022, like below
+Click "choose the model", choose from "Linear Regression", "MLP", or "LSTM", and click "Forecast 2022" to get the animated predicted receipt count values (daily and monthly) in 2022, like below:
+
+<i> Note: After clicking "forecast 2022", the inference procedure will start running, during which a predicted result video will be saved. After that, the app would show that video. Because it may take a while to inference, you would see the webpage "loading" for a little while.</i>
+
+<i>If you don't want to wait that few seconds, you can go to the `app.py` file, and comment out those 3 `os.system()` lines. Then rebuild (well, this would take much longer time) or retype and run `flask run` at your local machine.</i>
 
 <img src="static/web_interface_forecast.png" width=800>
 
@@ -47,7 +51,7 @@ python -m train.train --arch linear --date True --norm True --steps 100
 python -m train.train --arch mlp --date True --norm True --steps 100
 ```
 
-#### 2.2.2 LSTM (Including Inference Codes)
+#### 2.2.2 LSTM (Actually Including Inference Codes)
 ```
 python keras_lstm.py
 ```
@@ -60,6 +64,7 @@ python -m train.train --arch lstm --norm True --steps 200
 ```
 python -m eval.eval --arch linear --model_path 'save/linear_bs64_99.pth'
 python -m eval.eval --arch mlp --hidden_dim 10 --model_path 'save/mlp_hid10_bs64_70.pth'
+python keras_lstm_inference_only.py --model_path 'save/lstm_in20_out1_hid40_100'
 ```
 
 ### 2.4 Run the Flask App

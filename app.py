@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 import os
+import time
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ def index():
     if request.method == 'POST':
         select = request.form.get('model_options')
         if select == 'Linear':
+            os.system("python -m eval.eval --arch linear --model_path 'save/linear_bs64_99.pth'")
             linear_forecasting_2022 = os.path.join(app.config['UPLOAD_FOLDER'], 'linear_forecasting_2022.mp4')
             linear_forecasting_2022_monthly = os.path.join(app.config['UPLOAD_FOLDER'], 'linear_forecasting_2022_monthly.mp4')
             return render_template(
@@ -19,6 +21,7 @@ def index():
                 receipt_count_mp4=linear_forecasting_2022, 
                 receipt_count_monthly_mp4=linear_forecasting_2022_monthly)
         elif select == 'MLP':
+            os.system("python -m eval.eval --arch mlp --hidden_dim 10 --model_path 'save/mlp_hid10_bs64_70.pth'")
             mlp_forecasting_2022 = os.path.join(app.config['UPLOAD_FOLDER'], 'mlp_forecasting_2022.mp4')
             mlp_forecasting_2022_monthly = os.path.join(app.config['UPLOAD_FOLDER'], 'mlp_forecasting_2022_monthly.mp4')
             return render_template(
@@ -26,6 +29,7 @@ def index():
                 receipt_count_mp4=mlp_forecasting_2022, 
                 receipt_count_monthly_mp4=mlp_forecasting_2022_monthly)
         elif select == 'LSTM':
+            os.system("python keras_lstm_inference_only.py --model_path 'save/lstm_in20_out1_hid40_100'")
             lstm_forecasting_2022 = os.path.join(app.config['UPLOAD_FOLDER'], 'lstm_forecasting_2022.mp4')
             lstm_forecasting_2022_monthly = os.path.join(app.config['UPLOAD_FOLDER'], 'lstm_forecasting_2022_monthly.mp4')
             return render_template(
