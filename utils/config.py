@@ -13,6 +13,15 @@ def add_data_options(parser):
     group.add_argument("--date", default=False, type=bool, help="If using the date as one feature.")
     group.add_argument("--norm", default=False, type=bool, help="If normalizing the input features.")
 
+    group.add_argument("--train_ratio", default=0.7, type=float, help="Train set ratio.")
+    group.add_argument("--val_ratio", default=0.1, type=float, help="Validation set ratio.")
+    group.add_argument("--test_ratio", default=0.2, type=float, help="Test set ratio.")
+    group.add_argument("--num_workers", default=4, type=int, help="Number of workers in the dataloader.")
+
+    group.add_argument("--train_bs", default=64, type=int, help="Batch size during training.")
+    group.add_argument("--val_bs", default=16, type=int, help="Batch size during validation")
+    group.add_argument("--test_bs", default=16, type=int, help="Batch size during testing")
+
 
 def add_model_options(parser):
     group = parser.add_argument_group('model')
@@ -35,12 +44,6 @@ def add_training_options(parser):
     group = parser.add_argument_group('training')
     group.add_argument("--save_dir", default="save", type=str, help="Path to save checkpoints and results.")
 
-    group.add_argument("--train_ratio", default=0.7, type=float, help="Train set ratio.")
-    group.add_argument("--val_ratio", default=0.1, type=float, help="Validation set ratio.")
-    group.add_argument("--test_ratio", default=0.2, type=float, help="Test set ratio.")
-
-    group.add_argument("--num_workers", default=4, type=int, help="Number of workers in the dataloader.")
-
     # Used in keras-lstm.py (Keras)
     group.add_argument("--epochs", default=1, type=int, help="Number of epochs to train.")
 
@@ -48,14 +51,10 @@ def add_training_options(parser):
     group.add_argument("--steps", default=10, type=int, help="Number of steps to update the gradients.") 
     group.add_argument("--lr", default=0.1, type=float, help="Learning rate.")
     group.add_argument("--weight_decay", default=0, type=float, help="Optimizer weight decay.")
-    
-    group.add_argument("--train_bs", default=64, type=int, help="Batch size during training.")
-    group.add_argument("--val_bs", default=16, type=int, help="Batch size during validation")
-    group.add_argument("--test_bs", default=16, type=int, help="Batch size during testing")
 
     group.add_argument("--log_interval", default=1, type=int, help="Interval for logging to the TensorBoard.")
     group.add_argument("--log_dir", default='save/experiments', type=str, help="Directory for logging.")
-    group.add_argument("--save_interval", default=1, type=int, help="Interval for saving the model.")
+    group.add_argument("--save_interval", default=10, type=int, help="Interval for saving the model.")
 
 
 def add_evaluation_options(parser):
