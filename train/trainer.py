@@ -5,6 +5,8 @@ from torch.optim import Adam
 # from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 
+import numpy as np
+
 
 class Trainer:
     def __init__(self, model, dataloaders, args):
@@ -12,13 +14,8 @@ class Trainer:
         self.train_dataloader, self.val_dataloader, self.test_dataloader, self.mean, self.std = dataloaders
         self.args = args
 
-        self._build_optimizer()
-        self.writer = SummaryWriter(args.log_dir)
+        self.loss_fn = nn.MSELoss()
         self.device = args.device
-
-        self.step = 0
-        self.num_steps = self.args.steps
-        self.num_epochs = self.num_steps // len(self.train_dataloader) + 1
 
         # Batch sizes
         self.train_bs = args.train_bs
@@ -35,11 +32,17 @@ class Trainer:
         self.output_dim = args.output_dim
 
     def _build_optimizer(self):
-        self.loss_fn = nn.MSELoss()
         self.optimizer = Adam(self.model.parameters(), lr=self.args.lr)
         # self.scheduler = torch.optim.lr_scheduler.MultiStepLR(self.optimizer, milestones=self.args.milestones)
 
     def train(self):
+        self._build_optimizer()
+        self.writer = SummaryWriter(args.log_dir)
+
+        self.step = 0
+        self.num_steps = self.args.steps
+        self.num_epochs = self.num_steps // len(self.train_dataloader) + 1
+
         for _ in range(self.num_epochs):
             if self.step >= self.num_steps:
                 break
@@ -117,8 +120,19 @@ class Trainer:
                 f'{self.args.save_dir}/{self.args.arch}_in{self.input_len}_out{self.output_len}_hid{self.hidden_dim}_bs{self.train_bs}_{self.step}.pth'
             )
 
+    def load(self):
+        model = torch.load(self.args.model_path)
+
+    def metrics(self, output, y):
+        diff = output - y
+        self.mse += np.mean(diff ** 2)
+        self.mae += np.mean(np.abs(diff))
+        self.rmse += np.sqrt(self.mse)
+        self.r2 += 1 - (np.sum(diff ** 2) / np.sum((y - np.mean(y)) ** 2))
+
     def test(self):
         test_loss = 0
+        self.mse, self.mae, self.rmse, self.r2 = 0, 0, 0, 0
         self.model.eval()
         with torch.no_grad():
             for X, y in self.test_dataloader:
@@ -130,5 +144,19 @@ class Trainer:
                     y = y.view(-1, self.output_len, self.output_dim).to(self.device)         
                 output = self.model(X)
                 test_loss += self.loss_fn(output, y).item()
+
+                # Evaluation Metrics
+                self.metrics(output.cpu().numpy(), y.cpu().numpy())
+                # print(self.mse, type(self.mse))
+        
         test_loss /= len(self.test_dataloader)
+        self.mse /= len(self.test_dataloader)
+        self.mae /= len(self.test_dataloader)
+        self.rmse /= len(self.test_dataloader)
+        self.r2 /= len(self.test_dataloader)
+
         print(f"test loss: {test_loss / self.args.test_bs:>8f} \n")
+        print(f"mean squared error: {self.mse / self.args.test_bs:>8f} \n")
+        print(f"mean absolute error: {self.mae / self.args.test_bs:>8f} \n")
+        print(f"root mean squared error: {self.rmse / self.args.test_bs:>8f} \n")
+        print(f"r2 score: {self.r2 / self.args.test_bs:>8f} \n")
