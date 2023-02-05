@@ -32,9 +32,12 @@ Click "choose the model", choose from "Linear Regression", "MLP", or "LSTM", and
 
 **<i>If you don't want to wait that few seconds, you can go to the `app.py` file, and comment out those 3 `os.system()` lines. Then rebuild the image or don't use docker and run `flask run` at your local machine.</i>**
 
-<img src="static/web_interface_forecast.png" width=800>
+<!-- <img src="static/web_interface_forecast.png" width=800> -->
 
-You can see the forecasted monthly sum of receipt count from the numbers in the bottom video.
+<video width="1000" width="800" control>
+    <source src="static/save_eval/lstm_forecasting_2022_monthly.mp4" type="video/mp4">
+</video>
+You can see the monthly sum from the numbers around the line in the video.
 
 ### 1.1 Evaluation Metric Numbers
 
@@ -60,9 +63,8 @@ You also need a few packages, please run
 ```
 pip install -r requirements.txt
 ```
-You might need to install `ffmpeg` because that is used in animating the final result. But it's fine because some animation results have already been generated
 
-### 2.2 Train (and Test) the models
+### 2.2 Train and Test the models
 
 #### 2.2.1 Linear Regression & MLP
 ```
@@ -72,9 +74,9 @@ python -m train.train --arch linear --date True --norm True --steps 100
 python -m train.train --arch mlp --hidden_dim 10 --date True --norm True --steps 100
 ```
 
-#### 2.2.2 LSTM (Actually Including Inference Codes)
+#### 2.2.2 LSTM (Including Inference)
 ```
-python keras_lstm.py
+python keras_lstm.py --arch lstm
 ```
 You could try the below command. But you need to finetune some hyperparameters in the `utils/config.py` file. Otherwise, the results won't be good.
 ```
@@ -82,7 +84,7 @@ python -m train.train --arch lstm --norm True --steps 200
 ```
 #### 2.2.3 Test-Only (Load Model Checkpoint)
 ```
-python -m train.test --arch linear  --date True --norm True --model_path 'save/linear_bs64_99.pth'
+python -m train.test --arch linear --date True --norm True --model_path 'save/linear_bs64_99.pth'
 ```
 ```
 python -m train.test --arch mlp --hidden_dim 10 --date True --norm True --model_path 'save/mlp_hid10_bs64_70.pth'
@@ -90,10 +92,10 @@ python -m train.test --arch mlp --hidden_dim 10 --date True --norm True --model_
 
 ### 2.3 Forecast 2022 Values (Inference / Evaluation)
 ```
-python -m eval.eval --arch linear --model_path 'save/linear_bs64_99.pth'
+python -m eval.eval --arch linear --date True --norm True --model_path 'save/linear_bs64_99.pth'
 ```
 ```
-python -m eval.eval --arch mlp --hidden_dim 10 --model_path 'save/mlp_hid10_bs64_70.pth'
+python -m eval.eval --arch mlp --date True --norm True --hidden_dim 10 --model_path 'save/mlp_hid10_bs64_70.pth'
 ```
 ```
 python keras_lstm_inference_only.py --model_path 'save/lstm_in20_out1_hid40_100.h5'

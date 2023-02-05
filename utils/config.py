@@ -45,7 +45,7 @@ def add_training_options(parser):
     group.add_argument("--save_dir", default="save", type=str, help="Path to save checkpoints and results.")
 
     # Used in keras-lstm.py (Keras)
-    group.add_argument("--epochs", default=1, type=int, help="Number of epochs to train.")
+    group.add_argument("--epochs", default=100, type=int, help="Number of epochs to train.")
 
     # Used in train/train.py (PyTorch)
     group.add_argument("--steps", default=10, type=int, help="Number of steps to update the gradients.") 

@@ -141,8 +141,10 @@ def prepare_dataloader(dataset, batch_size, args, shuffle):
 # Test the implementation
 if __name__=="__main__":
     from utils.config import train_args, eval_args
+    from utils.fixseed import fixseed
     t_args = train_args()
     e_args = eval_args()
+    fixseed(t_args.seed)
 
     # train_dataloader, val_dataloader, test_dataloader, mean, std = get_dataloader(t_args)
 
@@ -155,9 +157,9 @@ if __name__=="__main__":
     case = 1
     for arch in ['linear', 'lstm', 'mlp']:
         t_args.arch = arch
-        for b1 in [True, False]:
+        for b1 in [False, True]:
             t_args.date = b1
-            for b2 in [True, False]:
+            for b2 in [False, True]:
                 t_args.norm = b2
                 print(f"\nCase {case}: arch={t_args.arch}, date={t_args.date}, norm={t_args.norm}")
 
@@ -179,6 +181,7 @@ if __name__=="__main__":
     e_args.arch = 'linear'
     e_args.date = True
     e_args.norm = True
+
     data = load_data(e_args)
 
     norm = np.loadtxt(f'utils/train_norm_{e_args.arch}.txt')
