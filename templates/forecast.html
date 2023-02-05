@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Fetch MLE Intern Exercise</title>
+    <link rel="stylesheet" href="static/style.css" />
+</head>
+<body>
+    <form action="/" method="post">
+        <h1>Runfeng's Forecasting Models</h1>
+        <h3>for the uploaded receipt counts at Fetch Rewards in 2022</h3><br>
+        <select name="model_options">
+            <option value="">Choose the model</option>
+            <option value="Linear">Linear Regression (PyTorch)</option>
+            <option value="MLP">MLP (PyTorch)</option>
+            <option value="LSTM">LSTM (Keras)</option>
+        </select>
+        <br><br>
+        <button name="forward_button" type="submit">Forecast 2022</button>
+        <br><br>
+        <h2>Daily Receipt Count Forecasting in 2022</h2>
+        <video width="1000" height="500" autoplay>
+            <source src="{{ receipt_count_mp4 }}" type="video/mp4">
+        </video>
+        <br>
+        <h2>Monthly Receipt Count Forecasting in 2022</h2>
+        <video width="1000" height="500" autoplay>
+            <source src="{{ receipt_count_monthly_mp4 }}" type="video/mp4">
+        </video>
+    </form>
+</body>
+</html>
