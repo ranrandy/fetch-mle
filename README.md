@@ -3,6 +3,8 @@ Runfeng Li.
 
 If you have any question, please contact me via runfeng4[at]illinois[dot]edu.
 
+**The codes have been tested on Mac system. I'm not sure if there would be any error on Windows**
+
 ## 1. Run the App
 Turn on **Docker** on your computer (please make sure it's started not starting), and run the following commands to build and run the docker image. You may need to wait 5-10 minutes until this image finishes setting up.
 ```
@@ -94,7 +96,7 @@ python -m eval.eval --arch linear --model_path 'save/linear_bs64_99.pth'
 python -m eval.eval --arch mlp --hidden_dim 10 --model_path 'save/mlp_hid10_bs64_70.pth'
 ```
 ```
-python keras_lstm_inference_only.py --model_path 'save/lstm_in20_out1_hid40_100'
+python keras_lstm_inference_only.py --model_path 'save/lstm_in20_out1_hid40_100.h5'
 ```
 
 ### 2.4 Run the Flask App
@@ -121,7 +123,7 @@ In `data/exploratory_data_analysis.ipynb`, I visualized some simple plots for th
 #### 2.5.3 Test Cases
 To test the implementation for `models.py` and `dataloader.py`, you can run
 ```
-python -m utils.model
+python -m utils.models
 ```
 ```
 python -m utils.dataloader

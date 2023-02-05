@@ -33,6 +33,7 @@ def main():
 	data, data_mean, data_std = load_data(args)
 
 	model = tf.keras.models.load_model(args.model_path)
+	model.compile(optimizer='adam', loss='mse')
 
 	# Autoregressively forecast the future
 	result = []

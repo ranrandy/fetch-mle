@@ -37,7 +37,7 @@ class Trainer:
 
     def train(self):
         self._build_optimizer()
-        self.writer = SummaryWriter(args.log_dir)
+        self.writer = SummaryWriter(self.args.log_dir)
 
         self.step = 0
         self.num_steps = self.args.steps

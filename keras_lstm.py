@@ -76,7 +76,7 @@ def main():
 
 	# plt.savefig(f"save_keras/{ii*5}.png")
 	# plt.close()
-	model.save(f'{args.save_dir}/{args.arch}_in{args.input_len}_out{args.output_len}_hid{args.hidden_dim}_{args.epochs}')
+	model.save(f'{args.save_dir}/{args.arch}_in{args.input_len}_out{args.output_len}_hid{args.hidden_dim}_{args.epochs}.h5')
 
 	args = eval_args()
 	args.arch = 'lstm'

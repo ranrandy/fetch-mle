@@ -176,6 +176,9 @@ if __name__=="__main__":
     
     # Test evaluation
     print(f"\nCase {case}: evaluation")
+    e_args.arch = 'linear'
+    e_args.date = True
+    e_args.norm = True
     data = load_data(e_args)
 
     norm = np.loadtxt(f'utils/train_norm_{e_args.arch}.txt')
