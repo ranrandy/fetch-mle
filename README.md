@@ -1,6 +1,6 @@
-Updates:
+**Updates:**
 
-- Feb 5: To make the webpage smoother, I have commented out the 3 `os.system` lines in `app.py`.
+- **02/Feb/2023** - To make the webpage smoother, I have commented out the 3 `os.system` lines in `app.py`.
 
 # MLE Take Home Exercise - Fetch
 Runfeng Li. 
